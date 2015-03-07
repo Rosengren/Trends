@@ -22,5 +22,4 @@ angular.module('controller1', [])
 		// 				console.log('Error: ' + data);
 		// 			});
 		// 	};
-	$scope.end = 'Made it to the end';
 });

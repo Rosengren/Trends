@@ -1,24 +1,15 @@
-var Model 	= require('./models/model'),
-		Store 	= require('./models/store'),
-		Feature = require('./models/feature');
+var Store 		= require('./models/store'),
+		Test			= require('./models/test'),
+		Feature 	= require('./models/feature'),
+		Training 	= require('./models/training');
 
 module.exports = function(app) {
 
-	app.get('/api/models', function(request, response) {
-
-		Model.find(function(err, models) {
-
-			if (err)
-				response.send(err);
-
-			response.json(models); // return all models in JSON format
-		});
-	});
+	// Store ================================================
 
 	app.get('/api/stores', function(request, response) {
 
 		Store.find(function(err, stores) {
-			// response.json({"message": "GOT HERE!"});
 
 			if (err)
 				response.send(err);
@@ -27,10 +18,11 @@ module.exports = function(app) {
 		});
 	});
 
-	app.get('/api/stores', function(request, response) {
+	// Test =================================================
+
+	app.get('/api/test', function(request, response) {
 
 		Store.find(function(err, stores) {
-			response.json({"message": "GOT HERE!"});
 
 			if (err)
 				response.send(err);
@@ -38,18 +30,32 @@ module.exports = function(app) {
 			response.json(stores);
 		});
 	});
+
+	// Feature ==============================================
 
 	app.get('/api/features', function(request, response) {
 
 			Feature.find(function(err, features) {
-				// response.json({"message": "GOT HERE TOO!"});
 
 				if (err)
 					response.send(err);
 
 				response.json(features);
-			})
-	})
+			});
+	});
+
+	// Training =============================================
+
+	app.get('/api/train', function(request, response) {
+
+		Training.find(function(err, features) {
+
+			if (err)
+				response.send(err);
+
+			response.json(train);
+		});
+	});
 
 	app.get('*', function(request, response) {
 		response.sendfile('./public/index.html'); // load index
