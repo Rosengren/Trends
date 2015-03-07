@@ -19,4 +19,14 @@ angular.module('Service', [])
 			return $http.delete('/api/models/' + id);
 		}
 	}
+}])
+
+.factory('Store', ['$http', function($http) {
+
+	return {
+
+		get: function() {
+			return $http.get('/api/stores');
+		}
+	}
 }]);

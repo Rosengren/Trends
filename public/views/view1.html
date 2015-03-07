@@ -1,4 +1,9 @@
 <div>
 	<h1>View 1</h1>
 	<p>{{ pageTitle }}</p>
+
+	<ul ng-repeat="store in stores">
+		<li>{{ store.Type }} ==> {{ store.Size }}</li>
+	</ul>
+	<p>{{ end }}</p>
 </div>
