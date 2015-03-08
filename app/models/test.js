@@ -3,8 +3,8 @@ var mongoose 		= require('mongoose'),
 		TestSchema	= new Schema({
 			'Store': Number,
 			'Dept': Number,
-			'Date': 'String',
-			'IsHoliday': 'String'
+			'Date': Date,
+			'IsHoliday': Boolean
 		});
 
 module.exports = mongoose.model('Test', TestSchema);

@@ -3,9 +3,9 @@ var mongoose 				= require('mongoose'),
 		TrainingSchema	= new Schema({
 			'Store': Number,
 			'Dept': Number,
-			'Date': String,
+			'Date': Number,
 			'Weekly_Sales': Number,
-			'IsHoliday': String
+			'IsHoliday': Boolean
 		});
 
 module.exports = mongoose.model('Training', TrainingSchema);
