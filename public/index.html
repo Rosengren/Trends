@@ -20,15 +20,18 @@
 	<!-- ANGULAR CUSTOM -->
 	<script src="js/controllers/controller1.js"></script>
 	<script src="js/controllers/controller2.js"></script>
+	<script src="js/directives/donutChart.js"></script>
 	<script src="js/services/service.js"></script>
 	<script src="js/appRoutes.js"></script>
 	<script src="js/app.js"></script>
 
 </head>
-<body ng-app="trends" ng-controller="SecondController">
+<body ng-app="trends" ng-controller="MainController">
 	
 	<div class="container">
-	<a href="/view2">Second Controller</a>
+		<donut-chart></donut-chart>
+		<a href="/">Main Controller</a><br/>
+		<a href="/view2">Second Controller</a>
 		<div ng-view></div>
 	</div>
 </body>

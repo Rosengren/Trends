@@ -1,4 +1,4 @@
-angular.module('controller1', [])
+angular.module('mainController', [])
 .controller('MainController', function($scope, $http) {
 	$scope.pageTitle = 'Main Page';
 
