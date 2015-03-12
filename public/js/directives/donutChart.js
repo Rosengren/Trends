@@ -14,12 +14,8 @@ angular.module('donutChart', [])
 								.attr('r', 40)
 								.attr('cx', 50)
 								.attr('cy', 50)
-								.on('mouseover', function() {
-									d3.select(this).style('fill', 'aliceblue');
-								})
-								.on('mouseout', function() {
-									d3.select(this).style('fill', 'white');
-								});
+								.on('mouseover', function() { d3.select(this).style('fill', 'aliceblue'); })
+								.on('mouseout', function() {d3.select(this).style('fill', 'white'); });
 		},
 		template: '<div id="circle"></div>'
 	};

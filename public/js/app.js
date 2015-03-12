@@ -1,8 +1,10 @@
 angular.module('trends', [
 		'ngRoute',
+		'ngMaterial',
 		'appRoutes',
 		'mainController',
 		'secondController',
+		'MainCtrl',
 		'Service',
 		'donutChart'
 		// 'd3'
