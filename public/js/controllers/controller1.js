@@ -2,14 +2,19 @@ angular.module('mainController', [])
 .controller('MainController', function($scope, $http) {
 	$scope.pageTitle = 'Main Page';
 
-	$http.get('/api/stores')
-		.success(function(data) {
+	$scope.toggleRight = function() {
+		console.log("THAT'S HOW!");
+	};
+	
+
+	// $http.get('/api/stores')
+	// 	.success(function(data) {
 			
-			$scope.stores = data;
-		})
-		.error(function(data) {
-			console.log('Error: ' + data);
-		});
+	// 		$scope.stores = data;
+	// 	})
+	// 	.error(function(data) {
+	// 		console.log('Error: ' + data);
+	// 	});
 
 		// $scope.createTodo = function() {
 		// 		$http.post('/api/todos', $scope.formData)

@@ -1,7 +1,9 @@
 <div>
-	<h1>View 1</h1>
+	<h1>Home View</h1>
 	<p>{{ pageTitle }}</p>
 	<donut-chart></donut-chart>
+	<md-button class="md-primary" ng-click="toggleRight()">Click me</md-button>
+	<md-switch class="md-primary">Switch me</md-switch>
 	<ul ng-repeat="store in stores">
 		<li>{{ store.Type }} ==> {{ store.Size }}</li>
 	</ul>

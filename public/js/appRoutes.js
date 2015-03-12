@@ -3,7 +3,7 @@ angular.module('appRoutes', [])
 
 	$routeProvider
 	.when('/', {
-		templateUrl: 'views/view1.html',
+		templateUrl: 'views/homeView.html',
 		controller: 'MainController'
 	})
 	.when('/view2', {
