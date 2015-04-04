@@ -1,7 +1,18 @@
 angular.module('chartController', ['ngMaterial'])
-.controller('chartController', ['$scope', '$mdSidenav', '$log', function($scope, $mdSidenav, $log) {
+.controller('chartController', ['$scope', '$mdSidenav', '$http', '$log', function($scope, $mdSidenav, $http, $log) {
 
 	$scope.pageTitle = 'Chart';
+
+
+	$scope.getTableData = function(route) {
+	  $http.get(route)
+	  	.success(function(data) {
+	  	$scope.tableData = data;
+	  })	  	
+	  .error(function(data) {
+	  	console.log('Error: ' + data);
+	  });
+	};
 
 	$scope.toggleRight = function() {
 	    $mdSidenav('right').toggle()

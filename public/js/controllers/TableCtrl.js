@@ -11,8 +11,6 @@ angular.module('tableController', ['ngMaterial'])
 	$scope.getTableData = function(route) {
 	  $http.get(route)
 	  	.success(function(data) {
-	  	
-	  	$scope.stores = data;
 
 	  	var headers = [];
 	  	var keys = Object.keys(data[0])
