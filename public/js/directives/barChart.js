@@ -2,99 +2,110 @@ angular.module('barChart', [])
 .directive('barChart', function() {
 
 	return {
+		restrict: 'EA',
+		scope: {
+			data: "=",
+			label: "@",
+			onClick: "&"
+		},
 		link: function($scope, $element, $attrs) {
 
-			$scope.getTableData('/api/features/limit/100');
-
-			var newData = $scope.tableData;
-			console.log(newData);
-			console.log($scope);
-
-			var data = [{letter: 'A', frequency: 0.08167},
-									{letter: 'B', frequency: 0.01492},
-									{letter: 'C', frequency: 0.02782},
-									{letter: 'D', frequency: 0.04253},
-									{letter: 'E', frequency: 0.12702},
-									{letter: 'F', frequency: 0.02288},
-									{letter: 'G', frequency: 0.02015},
-									{letter: 'H', frequency: 0.06094},
-									{letter: 'I', frequency: 0.06966},
-									{letter: 'J', frequency: 0.00153},
-									{letter: 'K', frequency: 0.00772},
-									{letter: 'L', frequency: 0.04025},
-									{letter: 'M', frequency: 0.02406},
-									{letter: 'N', frequency: 0.06749},
-									{letter: 'O', frequency: 0.07507},
-									{letter: 'P', frequency: 0.01929},
-									{letter: 'Q', frequency: 0.00095},
-									{letter: 'R', frequency: 0.05987},
-									{letter: 'S', frequency: 0.06327},
-									{letter: 'T', frequency: 0.09056},
-									{letter: 'U', frequency: 0.02758},
-									{letter: 'V', frequency: 0.00978},
-									{letter: 'W', frequency: 0.02360},
-									{letter: 'X', frequency: 0.00150},
-									{letter: 'Y', frequency: 0.01974},
-									{letter: 'Z', frequency: 0.00074}];
-
-
+			var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
+			                11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ];
 
 			var margin = {top: 20, right: 20, bottom: 30, left: 40},
 					width = 960 - margin.left - margin.right,
-					height = 500 - margin.top - margin.bottom;
+					height = 400 - margin.top - margin.bottom;
 
-			var x = d3.scale.ordinal()
-				.rangeRoundBands([0, width], 0.1);
+			var barPadding = 1;
 
-			var y = d3.scale.linear()
-				.range([height, 0]);
+			var xScale = d3.scale.ordinal()
+				.domain(d3.range(dataset.length))
+				.rangeRoundBands([0, width], 0.05);
 
-			var xAxis = d3.svg.axis()
-				.scale(x)
-				.orient("bottom");
-
-			var yAxis = d3.svg.axis()
-				.scale(y)
-				.orient("left")
-				.ticks(10, "%");
+			var yScale = d3.scale.linear()
+				.domain([0, d3.max(dataset)])
+				.range([0, height]);
 
 			var svg = d3.select("#barChart").append("svg")
 				.attr("width", width + margin.left + margin.right)
-				.attr("height", height + margin.top + margin.bottom)
-				.append("g")
-				.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+				.attr("height",  height + margin.top + margin.bottom)
+			
+			svg.selectAll("rect")
+				.data(dataset)
+				.enter()
+				.append("rect")
+				.attr("x", function(d, i ) {
+					return xScale(i);
+				})
+				.attr("y", function(d) {
+					return height - yScale(d);
+				})
+				.attr("width", xScale.rangeBand())
+				.attr("height", function(d) {
+					return yScale(d);
+				})
+				.attr("fill", function(d) {
+					return "rgb(0, 0, " + (d * 10) + ")";
+				});
 
-
-			x.domain(data.map(function(d) { return d.letter; }));
-			y.domain([0, d3.max(data, function(d) { return d.frequency; })]);
-			svg.append("g")
-				.attr("class", "x axis")
-				.attr("transform", "translate(0," + height + ")")
-				.call(xAxis);
-
-			svg.append("g")
-				.attr("class", "y axis")
-				.call(yAxis)
+			svg.selectAll("text")
+				.data(dataset)
+				.enter()
 				.append("text")
-				.attr("transform", "rotate(-90")
-				.attr("y", 6)
-				.attr("dy", "0.71em")
-				.style("text-anchor", "end")
-				.text("Frequency");
+				.text(function(d) {
+					return d;
+				})
+				.attr("text-anchor", "middle")
+				.attr("x", function(d, i) {
+					return xScale(i) + xScale.rangeBand() / 2;
+				})
+				.attr("y", function(d) {
+					return height - yScale(d) + 14;
+				})
+				.attr("font-family", "sans-serif")
+				.attr("font-size", "11px")
+				.attr("fill", "white");
 
-			svg.selectAll(".bar")
-				.data(data)
-				.enter().append("rect")
-				.attr("class", "bar")
-				.attr("x", function(d) { return x(d.letter); })
-				.attr("width", x.rangeBand())
-				.attr("y", function(d) { return y(d.frequency); })
-				.attr("height", function(d) { return height - y(d.frequency); });
 
-			function type(d) {
-				d.frequency = +d.frequency;
-				return d;
+			$scope.renderBarChart = function(data) {
+
+				// Update bars
+				svg.selectAll("rect")
+					.data(data)
+					.transition()
+					.duration(1000)
+					.ease("linear")
+					.attr("y", function(d) {
+						return height - yScale(d);
+					})
+					.attr("height", function(d) {
+						return yScale(d);
+					})
+					.attr("fill", function(d) {
+						return "rgb(0, 0, " + (d * 10) + ")";
+					});
+
+				// Update labels
+				svg.selectAll("text")
+					.data(data)
+					.transition()
+					.duration(1000)
+					.ease("linear")
+					.text(function(d) { return d; })
+					.attr("x", function(d, i) {
+						return xScale(i) + xScale.rangeBand() / 2;
+					})
+					.attr("y", function(d) {
+						return height - yScale(d) + 14;
+					});
 			}
+
+
+			// watch for data changes and re-render
+			$scope.$watch('data', function(newDataset, oldDataset) {
+			  return $scope.renderBarChart(newDataset);
+			}, true);
 
 		},
 		template: '<div id="barChart"></div>'

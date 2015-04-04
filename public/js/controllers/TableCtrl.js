@@ -32,9 +32,9 @@ angular.module('tableController', ['ngMaterial'])
   // START TABS
 
 	var tabs = [
-    { title: 'Stores', 	content: ""},
-    { title: 'Features', 		content: ""},
-    { title: 'Tests', 			content: ""},
+    { title: 'Stores', 		content: ""},
+    { title: 'Features', 	content: ""},
+    { title: 'Tests', 		content: ""},
     { title: 'Training',	content: ""},
   ],
 

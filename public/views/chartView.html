@@ -4,19 +4,12 @@
 
     <md-content class="md-whiteframe-z5 md-padding">
     
-  		<h1>{{ pageTitle }}</h1>
+      <md-button class="md-primary" ng-click="toggleRight()">View Other Charts</md-button>
+      <h1>{{ pageTitle }}</h1>
 
-  		<bar-chart></bar-chart>
+      <bar-chart data="barChartData" label="name"></bar-chart>
 
-  	</md-content><br/>
-      <md-content class="md-whiteframe-z5 md-padding">
-        <p>Other Details will go here</p>
-        <md-button class="md-primary" ng-click="toggleRight()">Toggle Right Sidebar</md-button>
-        <md-switch class="md-primary">Switches for stuff</md-switch>
-        <md-switch class="md-primary">Switches for stuff</md-switch>
-        <md-switch class="md-primary">Switches for stuff</md-switch>
-        <md-switch class="md-primary">Switches for stuff</md-switch>
-      </md-content>
+    </md-content>
     </md-content>
 
     <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right">
@@ -25,9 +18,11 @@
         </md-toolbar>
         <md-content ng-controller="RightCtrl" class="md-padding">
             Plenty of space for activities!
-            <md-button ng-click="close()" class="md-primary">
-              Close Sidenav Right
-            </md-button>
+        <md-button class="md-primary" ng-click="showDiff()">Show Diff</md-button>
+        <md-switch class="md-primary">Switches for stuff</md-switch>
+
+        <br/>
+        <md-button ng-click="close()" class="md-primary"> Close </md-button>
         </md-content>
     </md-sidenav>
   </div>

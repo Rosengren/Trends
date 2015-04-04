@@ -14,6 +14,16 @@ angular.module('chartController', ['ngMaterial'])
 	  });
 	};
 
+	$scope.barChartData = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13, 11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ];
+
+
+	$scope.showDiff = function() {
+		console.log("SHOW DIFF DID CLICKED");
+		$scope.barChartData = [ 11, 12, 15, 20, 18, 17, 16, 18, 23, 25,
+												5, 10, 13, 19, 21, 25, 22, 18, 15, 13 ];
+
+	};
+
 	$scope.toggleRight = function() {
 	    $mdSidenav('right').toggle()
 	                       .then(function(){
