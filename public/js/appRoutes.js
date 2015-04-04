@@ -4,11 +4,15 @@ angular.module('appRoutes', [])
 	$routeProvider
 	.when('/', {
 		templateUrl: 'views/homeView.html',
-		controller: 'MainController'
+		controller: 'mainController'
 	})
-	.when('/view2', {
-		templateUrl: 'views/view2.html',
-		controller: 'SecondController'
+	.when('/chartView', {
+		templateUrl: 'views/chartView.html',
+		controller: 'chartController'
+	})
+	.when('/tableView', {
+		templateUrl: 'views/tableView.html',
+		controller: 'tableController'
 	});
 
 	$locationProvider.html5Mode(true);

@@ -1,5 +1,5 @@
 // API calls and Node Backend -> Angular Frontend is done here
-angular.module('Service', [])
+angular.module('service', [])
 .factory('Model', ['$http', function($http) {
 
 	return {

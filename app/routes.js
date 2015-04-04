@@ -20,16 +20,27 @@ module.exports = function(app) {
 
 	// Test =================================================
 
-	app.get('/api/test', function(request, response) {
+	app.get('/api/tests', function(request, response) {
 
-		Store.find(function(err, stores) {
+		Test.find(function(err, tests) {
 
 			if (err)
 				response.send(err);
 
-			response.json(stores);
+			response.json(tests);
 		});
 	});
+
+	app.get('/api/tests/limit/:limit', function(request, response) {
+
+		Test.find({}, {}, 
+			{limit: request.params.limit}, function(err, tests) {
+
+			if (err)
+				response.send(err);
+			response.json(tests);
+		})
+	})
 
 	// Feature ==============================================
 
@@ -44,18 +55,44 @@ module.exports = function(app) {
 			});
 	});
 
-	// Training =============================================
+	app.get('/api/features/limit/:limit', function(request, response) {
 
-	app.get('/api/train', function(request, response) {
-
-		Training.find(function(err, features) {
-
+		Feature.find({}, {}, 
+			{limit: request.params.limit}, function(err, features) {
+			
 			if (err)
 				response.send(err);
 
-			response.json(train);
+			response.json(features);
+		});
+
+	});
+
+	// Training =============================================
+
+	app.get('/api/training', function(request, response) {
+
+		Training.find(function(err, training) {
+			
+			if (err)
+				response.send(err);
+			response.json(training);
 		});
 	});
+
+	app.get('/api/training/limit/:limit', function(request, response) {
+
+		console.log("HERE");
+		Training.find({}, {}, 
+			{limit: request.params.limit}, function(err, training) {
+			
+			if (err)
+				response.send(err);
+			response.json(training)
+		})
+	})
+
+	// Catch-All ============================================
 
 	app.get('*', function(request, response) {
 		response.sendfile('./public/index.html'); // load index
