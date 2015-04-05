@@ -5,7 +5,7 @@
     <md-content class="md-whiteframe-z5 md-padding">
     
       <md-button class="md-primary" ng-click="toggleRight()">View Other Charts</md-button>
-      <h1>{{ pageTitle }}</h1>
+      <h1 class="md-display-2">{{ pageTitle }}</h1>
 
       <bar-chart data="barChartData" label="name"></bar-chart>
 
@@ -17,12 +17,17 @@
             <h1 class="md-toolbar-tools">Sidenav Right</h1>
         </md-toolbar>
         <md-content ng-controller="RightCtrl" class="md-padding">
-            Plenty of space for activities!
-        <md-button class="md-primary" ng-click="showDiff()">Show Diff</md-button>
-        <md-switch class="md-primary">Switches for stuff</md-switch>
+          Select chart to display
 
+          <div ng-repeat="feature in features">
+            <md-button class="md-primary" ng-click="calculateAverage(feature)">{{feature}}</md-button>
+          </div>
+          <div layout="column" layout-align="space-around end">
+            <md-button ng-click="close()" class="md-primary" > Close </md-button>
+          </div>
+
+       <!-- <md-switch class="md-primary">Switches for stuff</md-switch> -->
         <br/>
-        <md-button ng-click="close()" class="md-primary"> Close </md-button>
         </md-content>
     </md-sidenav>
   </div>

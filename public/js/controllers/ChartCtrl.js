@@ -1,27 +1,44 @@
 angular.module('chartController', ['ngMaterial'])
 .controller('chartController', ['$scope', '$mdSidenav', '$http', '$log', function($scope, $mdSidenav, $http, $log) {
 
-	$scope.pageTitle = 'Chart';
+	var NUMBER_OF_STORES = 45;
+	$scope.features = ["CPI", "Temperature", "Unemployment", "Fuel_Price", "MarkDown1", "MarkDown2", "MarkDown3", "MarkDown4", "MarkDown5"];
+
+	$scope.pageTitle = '';
 
 
-	$scope.getTableData = function(route) {
-	  $http.get(route)
+	$scope.calculateAverage = function(feature) {
+	  $http.get('/api/features/')
 	  	.success(function(data) {
-	  	$scope.tableData = data;
+
+
+	  	$scope.pageTitle = 'Average ' + feature;
+	  	var formattedData = [];
+
+	  	for (i = 1; i <= 45; i++)
+	  		formattedData.push({key: i, value: 0.0, total: 0.0});
+
+
+	  	for (d in data) {
+	  		if (!isNaN(parseFloat(data[d][feature])) && isFinite(data[d][feature])) {
+		  		formattedData[data[d]['Store'] - 1].value += parseFloat(data[d][feature]);
+		  		formattedData[data[d]['Store'] - 1].total++;
+				}
+	  	}
+
+
+	  	// calculate average
+	  	for (i = 0; i < 45; i++) {
+	  		if (formattedData[i].total != 0)
+		  		formattedData[i].value /= formattedData[i].total;
+	  	}
+
+	  	$scope.barChartData = formattedData;
+
 	  })	  	
 	  .error(function(data) {
 	  	console.log('Error: ' + data);
 	  });
-	};
-
-	$scope.barChartData = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13, 11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ];
-
-
-	$scope.showDiff = function() {
-		console.log("SHOW DIFF DID CLICKED");
-		$scope.barChartData = [ 11, 12, 15, 20, 18, 17, 16, 18, 23, 25,
-												5, 10, 13, 19, 21, 25, 22, 18, 15, 13 ];
-
 	};
 
 	$scope.toggleRight = function() {
@@ -31,6 +48,11 @@ angular.module('chartController', ['ngMaterial'])
 		                       	// do work
 	                        });
 	  };
+
+
+	// generate first chart
+	$scope.calculateAverage($scope.features[0]);
+
 }])
 .controller('RightCtrl', function($scope, $timeout, $mdSidenav, $log) {
   $scope.close = function() {
