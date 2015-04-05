@@ -4,7 +4,7 @@ angular.module('chartController', ['ngMaterial'])
 	var NUMBER_OF_STORES = 45;
 	$scope.features = ["CPI", "Temperature", "Unemployment", "Fuel_Price", "MarkDown1", "MarkDown2", "MarkDown3", "MarkDown4", "MarkDown5"];
 
-	$scope.pageTitle = '';
+	$scope.pageTitle = ' ';
 
 
 	$scope.calculateAverage = function(feature) {

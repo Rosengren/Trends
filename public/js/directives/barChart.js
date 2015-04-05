@@ -10,21 +10,19 @@ angular.module('barChart', [])
 		},
 		link: function($scope, $element, $attrs) {
 
-			var NUMBER_OF_STORES = 45;
+			var NUMBER_OF_STORES = 45; // TODO: should not be hardcoded
 
 			var dataset = [];
 			for (i = 1; i <= NUMBER_OF_STORES; i++) {
-				dataset.push({key: i, value: 0});
+				dataset.push({key: i, value: 1});
 			}
 
-			var margin = {top: 10, right: 20, bottom: 30, left: 60},
-					width = 960 - margin.left - margin.right,
+			var margin = {top: 5, right: 20, bottom: 30, left: 50},
+					width = 1210 - margin.left - margin.right,
 					height = 400 - margin.top - margin.bottom;
 
-			var barPadding = 1;
-
 			var xScale = d3.scale.ordinal()
-				.domain(d3.range(0, dataset.length))
+				.domain(dataset.map(function(d) { return d.key; }))
 				.rangeRoundBands([0, width], 0.05);
 
 			var yScale = d3.scale.linear()
@@ -52,8 +50,8 @@ angular.module('barChart', [])
 				.data(dataset, key)
 				.enter()
 				.append("rect")
-				.attr("x", function(d, i ) {
-					return xScale(i);
+				.attr("x", function(d, i) {
+					return xScale(i + 1);
 				})
 				.attr("y", function(d) {
 					return yScale(d.value);
@@ -67,18 +65,17 @@ angular.module('barChart', [])
 
 			svg.append("g")
 			    .attr("class", "x axis")
-			    .attr("transform", "translate(" + margin.left + "," + height + ")")
-			    .call(xAxis);
+			    .attr("transform", "translate(" + margin.left + "," + height + ")");
 
 			svg.append("g")
 			    .attr("class", "y axis")
-			    .attr("transform", "translate(" + margin.left + ",0)")
-			    .call(yAxis);
+			    .attr("transform", "translate(" + (margin.left + 5) + ",0)");
 
 			$scope.renderBarChart = function(data) {
 
 				data = data || [];
-				xScale.domain(d3.range(0, data.length)); // TODO: Change this to display values instead of number range
+				// xScale.domain(d3.range(0, data.length)); // TODO: Change this to display values instead of number range
+				xScale.domain(data.map(function(d) { return d.key; }));
 				yScale.domain([0, d3.max(data, function(d) { return d.value; })])
 
 				//Select…
@@ -93,7 +90,7 @@ angular.module('barChart', [])
 					.duration(1000)
 					.ease("linear")
 					.attr("x", function(d, i) {
-						return xScale(i);
+						return xScale(i + 1);
 					})
 					.attr("y", function(d) {
 						return yScale(d.value);

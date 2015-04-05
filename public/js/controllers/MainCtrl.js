@@ -4,7 +4,7 @@ angular.module('mainController', ['ngMaterial'])
     $mdSidenav(menuId).toggle();
   };
 
-	$scope.pageTitle = 'Main Page';
+	$scope.pageTitle = 'Main';
 
 	$scope.toggleRight = function() {
 	    $mdSidenav('right').toggle()
