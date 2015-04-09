@@ -71,6 +71,18 @@ https://github.com/google/material-design-icons
   display: none;
 }
 
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+.reg {
+  fill: none;
+  stroke: orange;
+  stroke-width: 1.5px;
+}
+
 
 /***** Material Design Table *****/
 a {

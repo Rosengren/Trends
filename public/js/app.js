@@ -6,6 +6,8 @@ angular.module('trends', [
 	'tableController',
 	'mainController',
 	'chartController',
+	'linearRegressionController',
 	'service',
-	'barChart'
+	'barChart',
+	'linearRegressionChart'
 ]);

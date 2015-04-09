@@ -1,0 +1,33 @@
+<div layout="row" flex>
+  <div layout="column" flex id="content">
+    <md-content flex class="md-padding">
+
+    <md-content class="md-whiteframe-z5 md-padding">
+    
+      <md-button class="md-primary" ng-click="toggleRight()">View Other Charts</md-button>
+      <h1 class="md-display-2">{{ pageTitle }}</h1>
+
+      <linear-regression-chart data="linearChartData" label="name"></linear-regression-chart>
+
+    </md-content>
+    </md-content>
+
+    <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right">
+        <md-toolbar class="md-theme-light">
+            <h1 class="md-toolbar-tools">Sidenav Right</h1>
+        </md-toolbar>
+        <md-content ng-controller="RightCtrl" class="md-padding">
+          Select chart to display
+
+        <div layout="column" layout-align="space-around end">
+          <md-button ng-click="close()" class="md-primary" > Close </md-button>
+        </div>
+
+
+       <!-- <md-switch class="md-primary">Switches for stuff</md-switch> -->
+        <br/>
+        </md-content>
+    </md-sidenav>
+
+  </div>
+</div>

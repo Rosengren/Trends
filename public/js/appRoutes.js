@@ -13,6 +13,10 @@ angular.module('appRoutes', [])
 	.when('/tableView', {
 		templateUrl: 'views/tableView.html',
 		controller: 'tableController'
+	})
+	.when('/linearRegressionView', {
+		templateUrl: 'views/linearRegressionView.html',
+		controller: 'linearRegressionController'
 	});
 
 	$locationProvider.html5Mode(true);

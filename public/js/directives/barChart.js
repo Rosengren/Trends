@@ -114,7 +114,6 @@ angular.module('barChart', [])
 					.call(yAxis);
 			}
 
-
 			// watch for data changes and re-render
 			$scope.$watch('data', function(newDataset, oldDataset) {
 			  return $scope.renderBarChart(newDataset);

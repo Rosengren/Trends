@@ -19,6 +19,7 @@
 	<script src="libs/angular-route/angular-route.min.js"></script>
 	<script src="libs/d3/d3.min.js"></script>
 	<script src="libs/jquery/dist/jquery.min.js"></script>
+	<script src="libs/simple-statistics/src/simple_statistics.js"></script>
 
 	<!-- Angular Material -->
 	<script src="libs/angular-animate/angular-animate.min.js"></script>
@@ -29,7 +30,9 @@
 	<script src="js/controllers/MainCtrl.js"></script>
 	<script src="js/controllers/TableCtrl.js"></script>
 	<script src="js/controllers/ChartCtrl.js"></script>
+	<script src="js/controllers/RegressionCtrl.js"></script>
 	<script src="js/directives/barChart.js"></script>
+	<script src="js/directives/linearRegressionChart.js"></script>
 	<script src="js/directives/mdTable.js"></script>
 	<script src="js/services/service.js"></script>
 	<script src="js/appRoutes.js"></script>
@@ -46,6 +49,7 @@
 		<md-button class="md-primary" ng-href="/">Home</md-button>
 		<md-button class="md-primary" ng-href="/tableView">Data Tables</md-button>
 		<md-button class="md-primary" ng-href="/chartView">Charts</md-button>
+		<md-button class="md-primary" ng-href="/linearRegressionView">Linear Regression</md-button>
 	</md-content>
 
 	<div layout="row" flex ng-view></div>

@@ -6,6 +6,7 @@
     "angular": "latest",
     "angular-route": "latest",
     "d3": "latest",
-    "angular-material": "~0.8.3"
+    "angular-material": "~0.8.3",
+    "simple-statistics": "~0.9.1"
   }
 }
