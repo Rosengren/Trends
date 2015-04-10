@@ -82,15 +82,42 @@ module.exports = function(app) {
 
 	app.get('/api/training/limit/:limit', function(request, response) {
 
-		console.log("HERE");
 		Training.find({}, {}, 
 			{limit: request.params.limit}, function(err, training) {
 			
 			if (err)
 				response.send(err);
 			response.json(training)
-		})
-	})
+		});
+	});
+
+	// Regression ===========================================
+
+	app.get('/api/linearRegression/limit/:limit', function(request, response) {
+
+		Training.find({}, 
+								 {_id:0, 'Dept':1, 'Date':1, 'Store': 1, 'Weekly_Sales': 1},
+								 {limit: request.params.limit}, function(err, training) {
+
+			if (err)
+				response.send(err);
+			response.json(training);
+		});
+
+	});
+
+	app.get('/api/linearRegression/limit/:limit/store/:store/dept/:dept', function(request, response) {
+
+		Training.find({Store: request.params.store, Dept: request.params.dept}, 
+								 {_id:0, 'Dept':1, 'Date':1, 'Store': 1, 'Weekly_Sales': 1}, 
+								 {limit: request.params.limit}, function(err, training) {
+
+			if (err)
+				response.send(err);
+			response.json(training);
+		});
+
+	});
 
 	// Catch-All ============================================
 

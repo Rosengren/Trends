@@ -14,8 +14,6 @@ angular.module('linearRegressionChart', [])
 					width = 1210 - margin.left - margin.right,
 					height = 400 - margin.top - margin.bottom;
 
-			var parseDate = d3.time.format("%d-%b-%y").parse;
-
 			var x = d3.time.scale()
 				.range([0, width]);
 
@@ -40,54 +38,89 @@ angular.module('linearRegressionChart', [])
 			.append("g")
 				.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-			d3.tsv("data.tsv", function(error, data) {
-				data.forEach(function(d) {
-					d.date = parseDate(d.date);
-					d.close = +d.close;
-				});
 
-				x.domain(d3.extent(data, function(d) { return d.date; }));
-				y.domain(d3.extent(data, function(d) { return d.close; }));
+			svg.append("g")
+				.attr("class", "x axis")
+				.attr("transform", "translate(0," + height + ")")
+				.call(xAxis);
 
-				// Derive a linear regression
-				var lin = ss.linear_regression().data(data.map(function(d) {
-					return [+d.date, d.close];
+			svg.append("g")
+				.attr("class", "y axis")
+				.call(yAxis)
+			.append("text")
+				.attr("transform", "rotate(-90)")
+				.attr("y", 6)
+				.attr("dy", ".71em")
+				.style("text-anchor", "end")
+				.text("Sales ($)");
+
+			svg.append("path")
+				.attr("class", "reg");
+
+			svg.append("path")
+				.attr("class", "line");
+		
+			$scope.renderLinearRegression = function(newData) {
+
+				if (newData !== undefined) {
+
+					x.domain(d3.extent(newData, function(d) { return d.date; }));
+					y.domain(d3.extent(newData, function(d) { return d.Weekly_Sales; }));
+
+
+					line = d3.svg.line()
+									.x(function(d) { return x(d.date); })
+									.y(function(d) { return y(d.Weekly_Sales); });
+
+
+					// Derive a linear regression
+					var lin = ss.linear_regression().data(newData.map(function(d) {
+
+					return [+d.date, d.Weekly_Sales];
 				})).line();
 
-				// Create a line based on the beginning and endpoints of the range
-				var lindata = x.domain().map(function(x) {
-					return {
-						date: new Date(x),
-						close: lin(+x)
-					};
-				});
+					// Create a line based on the beginning and endpoints of the range
+					var lindata = x.domain().map(function(t) {
+						return {
+							date: new Date(t),
+							Weekly_Sales: lin(+t)
+						};
+					});
 
-				svg.append("g")
-					.attr("class", "x axis")
-					.attr("transform", "translate(0," + height + ")")
-					.call(xAxis);
+					svg.select(".line")
+						.datum(newData)
+						.transition()
+						.duration(1000)
+						.ease("linear")
+						.attr("class", "line")
+						.attr("d", line);
 
-				svg.append("g")
-					.attr("class", "y axis")
-					.call(yAxis)
-				.append("text")
-					.attr("transform", "rotate(-90)")
-					.attr("y", 6)
-					.attr("dy", ".71em")
-					.style("text-anchor", "end")
-					.text("Price ($)");
+					svg.select(".reg")
+						.datum(lindata)
+						.transition()
+						.duration(1000)
+						.ease("linear")
+						.attr("class", "reg")
+						.attr("d", line);
 
-				svg.append("path")
-					.datum(data)
-					.attr("class", "line")
-					.attr("d", line);
+					svg.select(".x.axis")
+						.transition()
+						.duration(1000)
+						.call(xAxis);
 
-				svg.append("path")
-					.datum(lindata)
-					.attr("class", "reg")
-					.attr("d", line);
+					svg.select(".y.axis")
+						.transition()
+						.duration(1000)
+						.call(yAxis);
 
-			});
+
+				}
+			}
+
+			// watch for data changes and re-render
+			$scope.$watch('data', function(newDataset, oldDataset) {
+			  return $scope.renderLinearRegression(newDataset);
+			}, true);
 
 		},
 		template: '<div id="linearRegressionChart"></div>'

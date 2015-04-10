@@ -3,7 +3,7 @@ var mongoose 				= require('mongoose'),
 		TrainingSchema	= new Schema({
 			'Store': Number,
 			'Dept': Number,
-			'Date': Number,
+			'Date': Date,
 			'Weekly_Sales': Number,
 			'IsHoliday': Boolean
 		});
