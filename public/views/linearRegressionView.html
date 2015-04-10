@@ -17,15 +17,52 @@
             <h1 class="md-toolbar-tools">Sidenav Right</h1>
         </md-toolbar>
         <md-content ng-controller="RightCtrl" class="md-padding">
-          Select chart to display
+          Set Graphing Options
+        <br/>
+        <br/>
+        <div layout="column" layout-align="space-between">
+          <div flex layout layout-align="center left">
+            <b>Store</b>
+            </div>
+          <div layout>
+            <md-slider flex min="1" max="45" ng-model="plotParam.store" aria-label="store" id="store-slider" class>
+            </md-slider>
+            <div flex="20" layout layout-align="center center">
+              <input type="number" ng-model="plotParam.store" aria-label="store" aria-controls="store-slider" disabled>
+            </div>
+          </div>
+        </div>
+        <div layout="column" layout-align="space-between">
+          <div flex="20" layout layout-align="center left">
+            <b>Department</b>
+          </div>
+          <div layout>
+            <md-slider flex ng-model="plotParam.department" min="1" max="99" aria-label="department" id="department-slider" class="md-primary">
+            </md-slider>
+            <div flex="20" layout layout-align="center center">
+              <input type="number" ng-model="plotParam.department" aria-label="department" aria-controls="department-slider" disabled>
+            </div>
+          </div>
+        </div>
+          <div layout="column" layout-align="space-between">
+            <div flex="20" layout layout-align="center left">
+              <b>Limit</b>
+            </div>
+            <div layout>
+              <md-slider flex ng-model="plotParam.limit" min="1" max="5000" aria-label="limit" id="limit-slider" class="md-accent">
+              </md-slider>
+              <div flex="20" layout layout-align="center center">
+                <input type="number" ng-model="plotParam.limit" aria-label="limit" aria-controls="limit-slider">
+              </div>
+            </div>
+          </div>
+          
 
-        <div layout="column" layout-align="space-around end">
+        <div layout="row" layout-align="space-between">
+          <md-button ng-click="plotLinearRegression()" class="md-primary" >Plot</md-button>
           <md-button ng-click="close()" class="md-primary" > Close </md-button>
         </div>
-
-
        <!-- <md-switch class="md-primary">Switches for stuff</md-switch> -->
-        <br/>
         </md-content>
     </md-sidenav>
 
