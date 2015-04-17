@@ -17,6 +17,10 @@ angular.module('appRoutes', [])
 	.when('/linearRegressionView', {
 		templateUrl: 'views/linearRegressionView.html',
 		controller: 'linearRegressionController'
+	})
+	.when('/testAiView', {
+		templateUrl: 'views/testAiView.html',
+		controller: 'comparisonController'
 	});
 
 	$locationProvider.html5Mode(true);

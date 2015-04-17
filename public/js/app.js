@@ -7,7 +7,9 @@ angular.module('trends', [
 	'mainController',
 	'chartController',
 	'linearRegressionController',
+	'comparisonController',
 	'service',
 	'barChart',
-	'linearRegressionChart'
+	'linearRegressionChart',
+	'testAi'
 ]);

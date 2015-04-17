@@ -1,0 +1,21 @@
+<div layout="row" flex>
+  <div layout="column" flex id="content">
+    <md-content flex class="md-padding">
+    	<md-content class="md-whiteframe-z5 md-padding md-default-theme">
+    		<h1>{{ pageTitle }}</h1>
+    	</md-content>
+
+    	<div ng-repeat="(test, testName) in aiTests">
+	    	<br/>
+	    	<md-content class="md-whiteframe-z5 md-padding md-default-theme">
+	    		<h3>{{ testName }}</h3>
+	    		<test-ai data="" label="{{ test }}">
+	    			<div class="{{ test }}"></div>
+	    		</test-ai>
+	    	</md-content>
+
+    	</div>
+
+    </md-content>
+  </div>
+</div>

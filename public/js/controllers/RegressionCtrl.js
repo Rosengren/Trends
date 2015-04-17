@@ -32,6 +32,8 @@ angular.module('linearRegressionController', ['ngMaterial'])
 			$scope.plotParam.limit);
 	}
 	
+	$scope.plotLinearRegression();
+
 }])
 .filter('startFrom',function (){
   return function (input,start) {
