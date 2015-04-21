@@ -5,6 +5,8 @@ angular.module('comparisonController', ['ngMaterial'])
 	const MILLIS_IN_A_DAY = 86400000;
 	const K_VALUE = 3;
 
+  $scope.timeout = 100;
+
 	$scope.pageTitle = "Comparison";
 	$scope.aiTests = {"svmTest": "Support Vector Machine", "lrTest": "Linear Regression", "rfTest": "Random Forest", "knnTest": "K-Nearest Neighbor"};
 
@@ -215,12 +217,6 @@ angular.module('comparisonController', ['ngMaterial'])
 		});
 	}
 
-
-
-  $scope.timeout = 100;
-  $scope.delay = 3
-      
-  
   function httpRequestHandler () {
       var timeout = $q.defer(),
           result = $q.defer(),
@@ -234,7 +230,7 @@ angular.module('comparisonController', ['ngMaterial'])
       
       httpRequest = $http({
           // method : 'post',
-          url: '/api/randomForest',
+          url: $scope.setURL,
           cache: false,
           timeout: timeout.promise
       });
@@ -258,21 +254,41 @@ angular.module('comparisonController', ['ngMaterial'])
   }
   
   $scope.testRandomForest = function () {
-      console.log('Requesting');
-      $scope.response = '';
-      
-      var httpRequest = httpRequestHandler();
-      
-      httpRequest.then(function (data) {
-          console.log('Complete');
-          $scope.response = data.text;
-      
-      }, function (error) {
-          console.log('Error');
-          $scope.response = error;            
-      });
-      
+		$scope.setURL = '/api/randomForest';
+    console.log('Requesting');
+    $scope.response = '';
+    
+    var httpRequest = httpRequestHandler();
+    
+    httpRequest.then(function (data) {
+        console.log('Complete');
+        console.log(data);
+    
+    }, function (error) {
+        console.log('Error');
+        $scope.response = error;            
+    });
   };
+
+ 
+  $scope.testSVM = function () {
+  	$scope.setURL = '/api/svm';
+    console.log('Requesting');
+    $scope.response = '';
+    
+    var httpRequest = httpRequestHandler();
+    
+    httpRequest.then(function (data) {
+        console.log('Complete');
+        console.log(data);
+    
+    }, function (error) {
+        console.log('Error');
+        $scope.response = error;            
+    });
+  };
+
+
    
 	// $scope.testRandomForest = function() {
 
@@ -293,7 +309,8 @@ angular.module('comparisonController', ['ngMaterial'])
 	// 	// return deferred.promise;
 	// }
 
-	$scope.testRandomForest();
+	// $scope.testRandomForest();
+	$scope.testSVM();
 
 
 	// $scope.testAiMethod(test)

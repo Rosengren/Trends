@@ -5,7 +5,8 @@ var Store 		= require('./models/store'),
 		Promise		= require('promise'),
 		fs = require('fs'),
 
-		RandomForest = require('./randomForest');
+		RandomForest = require('./randomForest'),
+		SVM = require('./svm');
 
 module.exports = function(app) {
 
@@ -216,6 +217,52 @@ module.exports = function(app) {
 
 			// TODO: Deal with errors
 	});
+
+	// SVM ==================================================
+
+	app.get('/api/svm', function(request, response) {
+
+		var getTrainingData = new Promise(function(resolve, reject) {
+
+			Training.find({}, 
+									 {_id:0, 'Dept':1, 'Date':1, 'Store': 1, 'Weekly_Sales': 1},
+									 {limit: 100}, function(err, training) {
+				if (err) {
+					reject(err);
+					// response.send(err);
+				} else {
+					// response.json(training);
+					resolve(training);
+				}
+			});
+		});
+
+
+		var getTestingData = new Promise(function(resolve, reject) {
+
+			Test.find({}, 
+							 {_id:0, 'Dept':1, 'Date':1, 'Store': 1, 'Weekly_Sales': 1},
+							 {limit: 20}, function(err, testing) {
+
+				if (err) {
+					// response.send(err);
+					reject(err);	
+				} else {
+					// response.json(testing);
+					resolve(testing);
+				}
+				
+			});
+		});
+
+		Promise.all([getTestingData, getTrainingData])
+			.then(function(data) {
+				SVM.testAi(data[0], data[1], response);
+			});
+
+
+
+	})
 
 	// Catch-All ============================================
 
