@@ -20,7 +20,6 @@ angular.module('service', [])
 		}
 	}
 }])
-
 .factory('Store', ['$http', function($http) {
 
 	return {

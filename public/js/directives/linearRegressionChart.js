@@ -62,7 +62,7 @@ angular.module('linearRegressionChart', [])
 		
 			$scope.renderLinearRegression = function(newData) {
 
-				if (newData !== undefined) {
+				if (newData !== undefined && typeof(newData) == 'object') {
 
 					x.domain(d3.extent(newData, function(d) { return d.date; }));
 					y.domain(d3.extent(newData, function(d) { return d.Weekly_Sales; }));

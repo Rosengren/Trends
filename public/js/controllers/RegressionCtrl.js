@@ -9,10 +9,24 @@ angular.module('linearRegressionController', ['ngMaterial'])
 	};
 
 	$scope.getLinearRegressionData = function(store, department, limit) {
-		$http.get('/api/linearRegression/limit/' + limit 
+		$http.get('/api/regression/limit/' + limit 
 			+ '/store/' + store + '/dept/' + department)
 		.success(function(data) {
+			for (var i in data) {
+				data[i].date = new Date(data[i].Date);
+			}
 
+			$scope.linearChartData = data;
+		})
+		.error(function(data) {
+			console.log("Error: " + data);
+		});
+	};
+
+	$scope.getLinearRegressionTestData = function(store, department, limit) {
+		$http.get('/api/tests/limit/' + limit 
+			+ '/store/' + store + '/dept/' + department)
+		.success(function(data) {
 			for (var i in data) {
 				data[i].date = new Date(data[i].Date);
 			}
@@ -27,6 +41,14 @@ angular.module('linearRegressionController', ['ngMaterial'])
 
 	$scope.plotLinearRegression = function() {
 		$scope.getLinearRegressionData(
+			$scope.plotParam.store,
+			$scope.plotParam.department,
+			$scope.plotParam.limit);
+	}
+	
+
+	$scope.plotLinearRegressionTestData = function() {
+		$scope.getLinearRegressionTestData(
 			$scope.plotParam.store,
 			$scope.plotParam.department,
 			$scope.plotParam.limit);

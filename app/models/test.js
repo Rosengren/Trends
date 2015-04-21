@@ -4,7 +4,8 @@ var mongoose 		= require('mongoose'),
 			'Store': Number,
 			'Dept': Number,
 			'Date': Date,
-			'IsHoliday': Boolean
+			'IsHoliday': Boolean,
+			'Weekly_Sales': Number
 		});
 
 module.exports = mongoose.model('Test', TestSchema);
