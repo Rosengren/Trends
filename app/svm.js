@@ -25,7 +25,7 @@ module.exports = {
 		console.log("svm: data formatted...\nsvm: initializing classifier...");
 
 		var clf = new SVM.SVM({
-		    svmType: 'NU_SVR'
+		    // svmType: 'NU_SVR'
 		});
 		 
 		console.log("svm: training classifier...");
@@ -50,7 +50,7 @@ module.exports = {
 			        totalDistances++;
 			        if (distance < 100) {
 			        	if (distance < 10) {
-			        		percentDistances[1]++;
+			        		percentDistances[0]++;
 			        	} else {
 			        		percentDistances[(''+distance)[0]]++;
 			        	}
@@ -60,13 +60,14 @@ module.exports = {
 			    });
 
 	    		console.log("svm: percent Distances: " + percentDistances);
-	    		resolve(percentDistances);
+	    		resolve([totalDistances, percentDistances]);
 
 			});
 		});
 
 		result.then(function(data) {
 			console.log("svm: sending response: " + data);
+
 			response.json(data);
 		});
 	}

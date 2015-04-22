@@ -5,17 +5,41 @@
     		<h1>{{ pageTitle }}</h1>
     	</md-content>
 
-    	<div ng-repeat="(test, testName) in aiTests">
+    	<div ng-repeat="(testName, test) in aiTests track by $index">
 	    	<br/>
 	    	<md-content class="md-whiteframe-z5 md-padding md-default-theme">
-	    		<h3>{{ testName }}</h3>
-	    		<test-ai data="" label="{{ test }}">
-	    			<div class="{{ test }}"></div>
-	    		</test-ai>
+          <div layout="column" layout-align="space-around start">
+            <div><h3>{{ test.name }}</h3></div>
+              <div>Set Data Training Limit:
+              <input type="number" ng-model="test.trainLimit" label="Train Limit"></div>
+              <br/>
+              <div>Set Data Testing Limit:
+              <input type="number" ng-model="test.testLimit" label="Train Limit"></div>
+              <br/>
+            <div><md-button class="md-raised md-warn" ng-click="runTest(testName)">Run Simulation</md-button>
+            </div>
+            <br/>
+            <div layout-fill layout="column" layout-align="space-around start" id="{{ test }}">
+              <div><b>Training Size:</b> {{ test.trainSize }}</div>
+              <div><b>Testing Size:</b> {{ test.testSize }}</div>
+            </div>
+            <br/>
+            <div layout="column" layout-align="space-around start" ng-repeat="percent in test.percentDistances track by $index">
+              under {{$index + 1}}0%: {{percent}}
+            </div>
+            <br/>
+            <div><b>{{test.within100}} out of {{ test.testSize }} were within 100%</b></div>
+            <div>
+              <b>Results Chart:</b>
+              <results-chart chartid="{{test.name}}" data="test.percentDistances"></results-chart>
+            </div>
+          </div>
 	    	</md-content>
-
     	</div>
-
+      <br/>
+      <md-content class="md-whiteframe-z5 md-padding md-default-theme">
+        <div id="charts"></div>
+      </md-content>
     </md-content>
   </div>
 </div>

@@ -173,18 +173,16 @@ module.exports = function(app) {
 
 	// Random Forest ========================================
 
-	app.get('/api/randomForest', function(request, response) {
+	app.get('/api/randomForest/testlimit/:testLimit/trainlimit/:trainLimit', function(request, response) {
 
 		var getTrainingData = new Promise(function(resolve, reject) {
 
 			Training.find({}, 
 									 {_id:0, 'Dept':1, 'Date':1, 'Store': 1, 'Weekly_Sales': 1},
-									 {limit: 200}, function(err, training) {
+									 {limit: request.params.trainLimit}, function(err, training) {
 				if (err) {
 					reject(err);
-					// response.send(err);
 				} else {
-					// response.json(training);
 					resolve(training);
 				}
 			});
@@ -195,13 +193,11 @@ module.exports = function(app) {
 
 			Test.find({}, 
 							 {_id:0, 'Dept':1, 'Date':1, 'Store': 1, 'Weekly_Sales': 1},
-							 {limit: 10}, function(err, testing) {
+							 {limit: request.params.testLimit}, function(err, testing) {
 
 				if (err) {
-					// response.send(err);
 					reject(err);	
 				} else {
-					// response.json(testing);
 					resolve(testing);
 				}
 				
@@ -210,28 +206,23 @@ module.exports = function(app) {
 
 		Promise.all([getTestingData, getTrainingData])
 			.then(function(data) {
-				console.log("DO I>");
-				response.json(RandomForest.testAi(data[0], data[1]));
-				console.log("END");
+				RandomForest.testAi(data[0], data[1], response);
 			});
 
-			// TODO: Deal with errors
 	});
 
 	// SVM ==================================================
 
-	app.get('/api/svm', function(request, response) {
+	app.get('/api/svm/testlimit/:testLimit/trainlimit/:trainLimit', function(request, response) {
 
 		var getTrainingData = new Promise(function(resolve, reject) {
 
 			Training.find({}, 
 									 {_id:0, 'Dept':1, 'Date':1, 'Store': 1, 'Weekly_Sales': 1},
-									 {limit: 100}, function(err, training) {
+									 {limit: request.params.trainLimit}, function(err, training) {
 				if (err) {
 					reject(err);
-					// response.send(err);
 				} else {
-					// response.json(training);
 					resolve(training);
 				}
 			});
@@ -242,13 +233,11 @@ module.exports = function(app) {
 
 			Test.find({}, 
 							 {_id:0, 'Dept':1, 'Date':1, 'Store': 1, 'Weekly_Sales': 1},
-							 {limit: 20}, function(err, testing) {
+							 {limit: request.params.testLimit}, function(err, testing) {
 
 				if (err) {
-					// response.send(err);
 					reject(err);	
 				} else {
-					// response.json(testing);
 					resolve(testing);
 				}
 				
